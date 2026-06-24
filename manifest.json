@@ -1,0 +1,83 @@
+{
+  "manifest_version": 3,
+  "default_locale": "zh_CN",
+  "name": "即投",
+  "version": "1.3.0",
+  "description": "BOSS 直聘 AI 自动投递助手 — 一键海投，智能招呼语",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "即投"
+  },
+  "side_panel": {
+    "default_path": "src/popup/popup.html"
+  },
+  "options_page": "src/options/options.html",
+  "permissions": ["storage", "activeTab", "scripting", "sidePanel", "alarms"],
+  "host_permissions": ["*://*.zhipin.com/*", "https://dashscope.aliyuncs.com/*", "https://cloudbase-d7gpznxde64f324c6-1428092559.ap-shanghai.app.tcloudbase.com/*", "https://*.cos.ap-shanghai.myqcloud.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.zhipin.com/web/geek/chat*"],
+      "js": ["src/content/ws-probe.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["*://*.zhipin.com/web/geek/jobs*"],
+      "js": ["src/content/welfare-collector.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["*://*.zhipin.com/web/geek/jobs*"],
+      "js": [
+        "src/content/selectors.js",
+        "src/content/salary-decoder.js",
+        "src/shared/error-logger.js",
+        "src/shared/diag-logger.js",
+        "src/content/job-collector.js",
+        "src/content/job-sender.js",
+        "src/content/job-clicker.js",
+        "src/content/content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.zhipin.com/web/geek/chat*"],
+      "js": [
+        "src/content/selectors.js",
+        "src/content/salary-decoder.js",
+        "src/shared/error-logger.js",
+        "src/shared/diag-logger.js",
+        "src/content/chat-monitor.js",
+        "src/content/job-sender.js",
+        "src/content/content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.zhipin.com/job_detail/*"],
+      "js": [
+        "src/content/selectors.js",
+        "src/content/salary-decoder.js",
+        "src/shared/error-logger.js",
+        "src/shared/diag-logger.js",
+        "src/content/job-sender.js",
+        "src/content/content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "src/background/service-worker.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/db/*", "src/utils/*", "src/popup/auto-reply-help.png"],
+      "matches": ["*://*.zhipin.com/*", "https://dashscope.aliyuncs.com/*"]
+    }
+  ]
+}
