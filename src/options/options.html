@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>自投 · 设置</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+      <h1 class="title">自投<span class="dot">·</span>设置</h1>
+      <p class="subtitle">配置简历图片与固定招呼语（本地模式，无需云端 AI）</p>
+    </header>
+
+    <!-- 简历图片 -->
+    <section class="card">
+      <h2 class="card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg>
+        简历图片
+      </h2>
+      <p class="card-desc">上传 1-2 张简历截图，海投时自动跟发。支持 JPG/PNG/WebP。</p>
+      <div class="upload-zone" id="uploadZone">
+        <input type="file" id="fileInput" accept="image/jpeg,image/png,image/webp" multiple hidden>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>
+        <span>拖拽图片到此处，或<span class="link">点击上传</span></span>
+      </div>
+      <div class="preview-grid" id="previewGrid"></div>
+    </section>
+
+    <!-- 固定招呼语（本地模式） -->
+    <section class="card">
+      <h2 class="card-title">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+        固定招呼语
+      </h2>
+      <p class="card-desc">未单独配置职位的全局默认招呼语（建议以「您好」开头、以「以下是我的简历」结尾）。<strong>不同期望职位用不同文案</strong>请在 <code>src/shared/constants.js</code> 的 <code>FIXED_GREETINGS_BY_CATEGORY</code> 里按职位名配置；留空则使用代码里的 <code>FIXED_GREETING_TEXT</code>。</p>
+      <div class="form-group">
+        <textarea id="fixedGreetingText" class="form-textarea" rows="5" placeholder="您好，我对贵司的招聘岗位很感兴趣……以下是我的简历"></textarea>
+      </div>
+    </section>
+
+    <!-- DeepSeek API 配置（本地模式下可忽略） -->
+    <section class="card" id="apiSection">
+      <div class="card-header-collapsible" id="apiSectionToggle">
+        <h2 class="card-title">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M16 12h-4V8"/></svg>
+          DeepSeek API 配置（可选，本地模式下不使用）
+        </h2>
+        <svg class="card-chevron" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+          <path d="M3 4.5l3 3 3-3"/>
+        </svg>
+      </div>
+      <div class="card-body-collapsible" id="apiSectionBody">
+        <div class="form-group">
+          <label class="form-label" for="apiKey">API Key</label>
+          <input type="password" id="apiKey" class="form-input" placeholder="sk-xxxxxxxxxxxx" autocomplete="off">
+        </div>
+        <div class="form-group">
+          <label class="form-label" for="textResume">文字简历</label>
+          <p class="card-desc">招呼语生成时参考你的简历内容，越详细越好。</p>
+          <textarea id="textResume" class="form-textarea" rows="6" placeholder="请在此粘贴你的简历文本..."></textarea>
+        </div>
+      </div>
+    </section>
+
+    <!-- 保存 -->
+    <div class="save-bar">
+      <button type="button" id="saveBtn" class="btn-save">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+        保存设置
+      </button>
+      <span id="saveStatus" class="save-status"></span>
+    </div>
+  </div>
+
+  <script src="../db/indexeddb.js"></script>
+  <script src="options.js"></script>
+</body>
+</html>

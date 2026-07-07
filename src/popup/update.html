@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>即投 · 更新方法</title>
+<style>
+  :root {
+    --text: #1f2937;
+    --text-muted: #6b7280;
+    --border: #e5e7eb;
+    --primary: #2563eb;
+    --bg: #f9fafb;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Microsoft YaHei", sans-serif;
+    color: var(--text);
+    background: #fff;
+    line-height: 1.7;
+    font-size: 14px;
+  }
+  .wrap { max-width: 720px; margin: 0 auto; padding: 0 20px 48px; }
+  header {
+    position: sticky; top: 0; z-index: 10;
+    background: #fff;
+    border-bottom: 1px solid var(--border);
+    padding: 18px 0 16px;
+  }
+  header .wrap { padding-bottom: 0; }
+  .brand { font-size: 18px; font-weight: 600; margin: 0 0 4px; }
+  .brand-sub { font-size: 12px; color: var(--text-muted); margin: 0; }
+  h1 { font-size: 20px; margin: 28px 0 6px; }
+  p { margin: 6px 0; }
+  /* 下载按钮（蓝色信息态，对齐 popup 升级条） */
+  .dl-area { margin: 22px 0 8px; }
+  .dl-btn {
+    display: inline-block; padding: 12px 28px;
+    font-size: 15px; font-weight: 600; color: #fff;
+    background: var(--primary); border-radius: 8px;
+    text-decoration: none; cursor: pointer;
+  }
+  .dl-btn:hover { background: #1d4ed8; }
+  .dl-note {
+    margin: 10px 0 0; padding: 10px 14px;
+    background: #FEF3C7; border: 1px solid #FCD34D; border-radius: 8px;
+    font-size: 13px; color: #92400E;
+  }
+  /* 三步 */
+  .steps { margin: 24px 0; padding: 0; list-style: none; counter-reset: step; }
+  .step {
+    position: relative; padding: 16px 16px 16px 56px;
+    margin: 0 0 12px; background: var(--bg);
+    border: 1px solid var(--border); border-radius: 10px;
+  }
+  .step::before {
+    counter-increment: step; content: counter(step);
+    position: absolute; left: 16px; top: 16px;
+    width: 28px; height: 28px; line-height: 28px; text-align: center;
+    background: var(--primary); color: #fff; border-radius: 50%;
+    font-size: 15px; font-weight: 600;
+  }
+  .step-title { font-size: 15px; font-weight: 600; margin: 0 0 4px; }
+  .step-desc { font-size: 13px; color: var(--text-muted); margin: 0; }
+  code {
+    padding: 2px 6px; background: #eef2ff; border-radius: 4px;
+    font-family: "SFMono-Regular", Consolas, monospace; font-size: 12px; color: #3730a3;
+  }
+  .contact {
+    margin-top: 28px; padding: 14px 16px; background: var(--bg);
+    border-radius: 8px; font-size: 13px; color: var(--text-muted);
+  }
+  .contact strong { color: var(--text); }
+</style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <p class="brand">即投 · 更新方法</p>
+      <p class="brand-sub">开发者模式安装的扩展需手动更新，三步搞定</p>
+    </div>
+  </header>
+
+  <div class="wrap">
+
+    <div class="dl-area">
+      <a class="dl-btn" id="dlBtn" href="#" target="_blank" rel="noopener">下载最新版</a>
+      <!-- ⚠️ 下载链接待填：user 自建网页上线后替换 account.js 的 UPDATE_URL 常量 -->
+      <p class="dl-note">⚠️ 下载链接待填——自建下载页上线后即可一键下载。在此之前请联系产品负责人获取最新安装包。</p>
+    </div>
+
+    <h1>更新三步</h1>
+    <ul class="steps">
+      <li class="step">
+        <p class="step-title">下载最新版</p>
+        <p class="step-desc">点上方「下载最新版」按钮，保存最新的扩展压缩包到电脑。</p>
+      </li>
+      <li class="step">
+        <p class="step-title">解压并覆盖旧文件夹</p>
+        <p class="step-desc">把下载的压缩包解压，用解压出的新文件<strong>覆盖</strong>原来安装即投的那个文件夹（保持文件夹位置不变，覆盖里面的内容即可）。</p>
+      </li>
+      <li class="step">
+        <p class="step-title">在扩展页点刷新</p>
+        <p class="step-desc">打开 <code>chrome://extensions</code>，找到「即投」，点它卡片上的刷新（↻）按钮。完成后版本号即更新，无需重新拖入。</p>
+      </li>
+    </ul>
+
+    <div class="contact">
+      更新遇到问题？联系：<strong>微信 13631515693</strong> ｜ <strong>邮箱 sipengliu48@gmail.com</strong>
+    </div>
+
+  </div>
+
+<script src="update.js"></script>
+</body>
+</html>
