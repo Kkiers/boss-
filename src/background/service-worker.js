@@ -2415,7 +2415,7 @@ async function collectOnTab(cityCode, params) {
   var tabId;
   // jitou 对齐：多城市/多关键词采集时，每条 collectUrl 独立后台 tab，采完保留供投递复用
   if (params && params.openDedicatedTab && !isTest) {
-    const tab = await chrome.tabs.create({ url: url, active: false });
+    const tab = await chrome.tabs.create({ url: url, active: true });
     tabId = tab.id;
     _collectOwnedTabIds.push(tabId);
     await waitForTabLoad(tabId, isTest ? 20000 : 25000);
@@ -2426,6 +2426,9 @@ async function collectOnTab(cityCode, params) {
   await sleep(isTest ? 600 : 1200);
   await waitForContentScriptOnUrl(tabId, url, isTest ? 3500 : 5000, isTest ? 10 : 6);
   await sleep(isTest ? 500 : 1000);
+
+  // 激活 tab 再采集——后台 tab 下 Chrome 严重节流 JS，BOSS 无限滚动无法加载新卡片
+  try { await chrome.tabs.update(tabId, { active: true }); await sleep(300); } catch (_) {}
 
   var collectPayload = Object.assign({}, params, { urlParams: urlParams, maxCollect: maxCollect });
   var response = null;
